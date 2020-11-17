@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:weather_app/Components/WeatherCart.dart';
+import 'package:weather_app/Components/WeatherCard.dart';
 import 'package:weather_app/Models/WeatherModel.dart';
 
 class WeatherHourly extends StatelessWidget {
@@ -15,18 +15,18 @@ class WeatherHourly extends StatelessWidget {
         height: 150,
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: hourlyWeather.length,
-          itemBuilder: (context, i) {
-            return WeatherCard(
-              title:
-                  '${hourlyWeather[i].time.hour}:${hourlyWeather[i].time.minute}0',
-              temperature: hourlyWeather[i].temperature.toInt(),
-              iconCode: hourlyWeather[i].iconCode,
-              temperatureFontSize: 20,
-            );
-          },
-        ),
+            clipBehavior: Clip.antiAlias,
+            scrollDirection: Axis.horizontal,
+            itemCount: hourlyWeather.length,
+            itemBuilder: (context, i) {
+              return WeatherCard(
+                title:
+                    '${hourlyWeather[i].time.hour}:${hourlyWeather[i].time.minute}0',
+                temperature: (hourlyWeather[i].temperature.toString() + '°'),
+                iconCode: hourlyWeather[i].iconCode,
+                temperatureFontSize: 20,
+              );
+            }),
       ),
     );
   }

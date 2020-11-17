@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/Components/WeatherCart.dart';
 import 'package:weather_app/Components/WeatherHourly.dart';
 import 'package:weather_app/Models/WeatherModel.dart';
+import 'package:weather_app/Widgets/Value_Title.dart';
+import 'package:weather_app/Widgets/Weather_Divider_Widget.dart';
 
 class WeatherMainScreenWrapper extends StatelessWidget {
   final Weather weather;
@@ -9,34 +10,68 @@ class WeatherMainScreenWrapper extends StatelessWidget {
 
   const WeatherMainScreenWrapper({Key key, this.weather, this.hourlyWeak})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(height: 48),
-          Text(
-            weather.city,
+    return Column(
+      children: [
+        SizedBox(height: 48),
+        Text(
+          weather.city,
+          style: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 24),
+        Text(
+          weather.descripstion[0].toUpperCase() +
+              weather.descripstion.substring(1),
+          style: TextStyle(fontSize: 18.0),
+        ),
+        SizedBox(
+          height: 24,
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 30),
+          child: Text(
+            '${this.weather.temperature}°',
             style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
+              fontSize: 100,
+              fontWeight: FontWeight.w100,
+              color: Colors.white,
             ),
           ),
-          SizedBox(height: 48),
-          WeatherCard(
-            title: 'Погода',
-            temperature: weather.temperature,
-            iconCode: weather.iconCode,
-            temperatureFontSize: 64,
-            iconSize: 1,
-          ),
-          SizedBox(height: 48),
-          WeatherHourly(
-            hourlyWeather: this.hourlyWeak,
-          ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 24,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ValueTile("Макс", '${this.weather.max_temp}°'),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Center(
+                child: Container(
+                  width: 1,
+                  height: 30,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            ValueTile("Мин", '${this.weather.min_temp}°'),
+          ],
+        ),
+        SizedBox(
+          height: 24,
+        ),
+        WeatherHourly(
+          hourlyWeather: this.hourlyWeak,
+        ),
+        WeatherWidget(
+          weather: weather,
+        ),
+      ],
     );
   }
 }

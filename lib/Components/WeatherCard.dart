@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class WeatherCard extends StatelessWidget {
   final String title;
-  final int temperature;
+  final String temperature;
   final String iconCode;
   final double temperatureFontSize;
   final double iconSize;
+  final int max_temp;
 
   const WeatherCard({
     Key key,
@@ -14,6 +15,7 @@ class WeatherCard extends StatelessWidget {
     this.iconCode,
     this.temperatureFontSize = 28,
     this.iconSize = 2,
+    this.max_temp,
   });
 
   @override
