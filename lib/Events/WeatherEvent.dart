@@ -12,6 +12,5 @@ class WeatherRequested extends WeatherEvent {
 
   @override
   List<Object> get props => [city];
-  
 }
   

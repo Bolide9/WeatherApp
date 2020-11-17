@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/Bloc/WeatherBloc.dart';
 import 'package:weather_app/Components/WeatherMainScreenWrapper.dart';
+import 'package:weather_app/Events/WeatherEvent.dart';
 import 'package:weather_app/States/WeatherState.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -10,8 +11,6 @@ import 'package:intl/intl.dart';
 void main() {
   runApp(MyApp());
 }
-
-enum OptionsMenu { settings }
 
 class MyApp extends StatelessWidget {
   @override
@@ -38,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController _cityName = TextEditingController();
+  TextEditingController _cityController = new TextEditingController();
 
   @override
   void initState() {
@@ -49,7 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WeatherBloc('Грозный'),
+      create: (context) => WeatherBloc(
+          _cityController.text.isEmpty ? 'Грозный' : _cityController.text),
       child: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           if (state is WeatherLoadSuccess) {
@@ -65,30 +65,84 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 centerTitle: true,
-                actions: [
-                  PopupMenuButton<OptionsMenu>(
-                    child: Icon(
-                      Icons.more_vert,
-                      color: Colors.white,
-                    ),
-                    onSelected: this._onOptionMenuItemSelected,
-                    itemBuilder: (context) => <PopupMenuEntry<OptionsMenu>>[
-                      PopupMenuItem<OptionsMenu>(
-                        value: OptionsMenu.settings,
-                        child: Text("Настройки"),
+              ),
+              body: Container(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                        child: TextFormField(
+                          controller: _cityController,
+                          autofocus: false,
+                          keyboardType: TextInputType.streetAddress,
+                          decoration: InputDecoration(
+                            labelText: 'Введите город: ',
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.normal,
+                              color: Colors.white,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white70,
+                                width: 1.0,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.white70,
+                                width: 2.0,
+                              ),
+                            ),
+                          ),
+                          onFieldSubmitted: (value) {
+                            BlocProvider.of<WeatherBloc>(context)
+                                .add(WeatherRequested(city: value));
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: WeatherMainScreenWrapper(
+                          weather: state.weather,
+                          hourlyWeak: state.hourlyWeather,
+                        ),
                       ),
                     ],
-                  )
-                ],
-              ),
-              body: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: WeatherMainScreenWrapper(
-                    weather: state.weather,
-                    hourlyWeak: state.hourlyWeather,
                   ),
                 ),
+              ),
+            );
+          }
+
+          if (state is WeatherLoadFail) {
+            return Scaffold(
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text('Похожа возникла какая-то ошибка'),
+                  ),
+                  SizedBox(height: 12),
+                  TextButton(
+                    clipBehavior: Clip.none,
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => MyHomePage()),
+                          (Route<dynamic> route) => false);
+                    },
+                    child: Text(
+                      'Попробовать снова',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }
@@ -111,56 +165,5 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
     );
-  }
-
-  void _showCityChangeDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text('Поменять город', style: TextStyle(color: Colors.black)),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'OK',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-          content: TextField(
-            autofocus: true,
-            onChanged: (value) {
-              _cityName.text = value;
-            },
-            decoration: InputDecoration(
-                hintText: 'Город',
-                hintStyle: TextStyle(color: Colors.black),
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Icon(
-                    Icons.my_location,
-                    color: Colors.black,
-                    size: 16,
-                  ),
-                )),
-            style: TextStyle(color: Colors.black),
-            cursorColor: Colors.black,
-          ),
-        );
-      },
-    );
-  }
-
-  _onOptionMenuItemSelected(OptionsMenu item) {
-    switch (item) {
-      case OptionsMenu.settings:
-        break;
-    }
   }
 }
