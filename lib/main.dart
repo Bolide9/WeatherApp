@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/Bloc/WeatherBloc.dart';
+import 'package:weather_app/Components/WeatherMainScreenWrapper.dart';
+import 'package:weather_app/States/WeatherState.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,12 +12,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Weather',
+      darkTheme: ThemeData.dark(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Weather App'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -28,34 +33,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Вы нажали ${_counter} раз',
+    return BlocProvider(
+      create: (context) => WeatherBloc('Грозный'),
+      child: BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) {
+          if (state is WeatherLoadSuccess) {
+            return Scaffold(
+              body: Padding(
+                padding: EdgeInsets.only(top: 64),
+                child: WeatherMainScreenWrapper(
+                  weather: state.weather,
+                  hourlyWeak: state.hourlyWeather,
+                ),
+              ),
+            );
+          }
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Идет загрузка...'),
+                  SizedBox(height: 24),
+                  SizedBox(
+                    height: 48,
+                  ),
+                  CircularProgressIndicator(),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+          );
+        },
       ),
     );
   }

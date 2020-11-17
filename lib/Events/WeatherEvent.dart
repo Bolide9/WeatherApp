@@ -14,3 +14,4 @@ class WeatherRequested extends WeatherEvent {
   List<Object> get props => [city];
   
 }
+  

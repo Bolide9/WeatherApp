@@ -17,11 +17,10 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json) {
     return Weather(
-      city: json['name'],
-      temperature: int.parse(json['main']['temp'].toString()),
-      iconCode: json['weather'][0]['icon'],
-      descripstion: json['weather'][0]['main'],
-      time: DateTime.fromMicrosecondsSinceEpoch(json['dt'] * 1000),
-    );
+        city: json['name'],
+        temperature: double.parse(json['main']['temp'].toString()).toInt(),
+        iconCode: json['weather'][0]['icon'],
+        descripstion: json['weather'][0]['main'],
+        time: DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000));
   }
 }
