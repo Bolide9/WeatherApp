@@ -5,7 +5,10 @@ import 'package:weather_app/Services/WeatherService.dart';
 import 'package:weather_app/States/WeatherState.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  WeatherBloc(WeatherState initialState) : super(initialState);
+  final String cityName;
+  WeatherBloc(this.cityName) : super(null) {
+    add(WeatherRequested(city: cityName));
+  }
 
   @override
   Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
