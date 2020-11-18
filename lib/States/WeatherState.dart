@@ -25,5 +25,4 @@ class WeatherLoadSuccess extends WeatherState {
 }
 
 class WeatherLoadFail extends WeatherState {
-  
 }
