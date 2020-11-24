@@ -1,3 +1,7 @@
+Tak Tak. chto tyt y nas?
+Doki? 
+Doki!!!
+
 # weather_app
 
 A new Flutter project.

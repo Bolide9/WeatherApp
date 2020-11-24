@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Weather App'),
+      home: MyHomePage(title: 'Weather App'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -48,8 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WeatherBloc(
-          _cityController.text.isEmpty ? 'Грозный' : _cityController.text),
+      create: (context) => WeatherBloc('Грозный'),
       child: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           if (state is WeatherLoadSuccess) {
@@ -146,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             );
           }
+
           return Scaffold(
             body: Center(
               child: Column(
