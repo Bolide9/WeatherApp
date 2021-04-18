@@ -5,10 +5,10 @@ import 'package:weather_app/Widgets/Value_Title.dart';
 import 'package:weather_app/Widgets/Weather_Divider_Widget.dart';
 
 class WeatherMainScreenWrapper extends StatefulWidget {
-  final Weather weather;
-  final List<Weather> hourlyWeak;
+  final Weather? weather;
+  final List<Weather>? hourlyWeak;
 
-  const WeatherMainScreenWrapper({Key key, this.weather, this.hourlyWeak})
+  const WeatherMainScreenWrapper({Key? key, this.weather, this.hourlyWeak})
       : super(key: key);
 
   @override
@@ -17,8 +17,8 @@ class WeatherMainScreenWrapper extends StatefulWidget {
 }
 
 class _WeatherMainScreenWrapperState extends State<WeatherMainScreenWrapper> {
-  final Weather weather;
-  final List<Weather> hourlyWeak;
+  final Weather? weather;
+  final List<Weather>? hourlyWeak;
 
   _WeatherMainScreenWrapperState(this.weather, this.hourlyWeak);
 
@@ -29,7 +29,7 @@ class _WeatherMainScreenWrapperState extends State<WeatherMainScreenWrapper> {
         children: [
           SizedBox(height: 24),
           Text(
-            weather.city,
+            weather!.city!,
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
@@ -37,8 +37,8 @@ class _WeatherMainScreenWrapperState extends State<WeatherMainScreenWrapper> {
           ),
           SizedBox(height: 24),
           Text(
-            weather.descripstion[0].toUpperCase() +
-                weather.descripstion.substring(1),
+            weather!.descripstion![0].toUpperCase() +
+                weather!.descripstion!.substring(1),
             style: TextStyle(fontSize: 18.0),
           ),
           SizedBox(
@@ -47,7 +47,7 @@ class _WeatherMainScreenWrapperState extends State<WeatherMainScreenWrapper> {
           Padding(
             padding: EdgeInsets.only(left: 30),
             child: Text(
-              '${this.weather.temperature}°',
+              '${weather!.temperature}°',
               style: TextStyle(
                 fontSize: 100,
                 fontWeight: FontWeight.w100,
@@ -61,25 +61,25 @@ class _WeatherMainScreenWrapperState extends State<WeatherMainScreenWrapper> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ValueTile("Макс", '${this.weather.max_temp}°'),
+              ValueTile("Макс", '${weather!.max_temp}°'),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Center(
                   child: Container(
                     width: 1,
-                    height: 30,
+                    height: 45,
                     color: Colors.white,
                   ),
                 ),
               ),
-              ValueTile("Мин", '${this.weather.min_temp}°'),
+              ValueTile("Мин", '${weather!.min_temp}°'),
             ],
           ),
           SizedBox(
             height: 24,
           ),
           WeatherHourly(
-            hourlyWeather: this.hourlyWeak,
+            hourlyWeather: hourlyWeak,
           ),
           WeatherWidget(
             weather: weather,

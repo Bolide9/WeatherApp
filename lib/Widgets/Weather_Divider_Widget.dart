@@ -5,9 +5,9 @@ import 'package:weather_app/Widgets/Value_Title.dart';
 
 // ignore: must_be_immutable
 class WeatherWidget extends StatelessWidget {
-  final Weather weather;
+  final Weather? weather;
 
-  const WeatherWidget({Key key, this.weather}) : super(key: key);
+  const WeatherWidget({Key? key, this.weather}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class WeatherWidget extends StatelessWidget {
             children: <Widget>[
               ValueTile(
                 "Скорость ветра",
-                this.weather.windSpeed.toString() + ' м/с',
+                this.weather!.windSpeed.toString() + ' м/с',
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
@@ -42,7 +42,7 @@ class WeatherWidget extends StatelessWidget {
                 "Восход",
                 DateFormat('h:m').format(
                   DateTime.fromMillisecondsSinceEpoch(
-                      this.weather.sunrise * 1000),
+                      this.weather!.sunrise! * 1000),
                 ),
               ),
               Padding(
@@ -59,7 +59,7 @@ class WeatherWidget extends StatelessWidget {
                 "Заход",
                 DateFormat('h:m').format(
                   DateTime.fromMillisecondsSinceEpoch(
-                    this.weather.sunset * 1000,
+                    this.weather!.sunset! * 1000,
                   ),
                 ),
               ),
@@ -73,7 +73,7 @@ class WeatherWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              ValueTile("Влажность", '${weather.humidity}%'),
+              ValueTile("Влажность", '${weather!.humidity}%'),
             ],
           ),
         ],

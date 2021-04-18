@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
 class WeatherCard extends StatelessWidget {
-  final String title;
-  final String temperature;
-  final String iconCode;
+  final String? title;
+  final String? temperature;
+  final String? iconCode;
   final double temperatureFontSize;
   final double iconSize;
-  final int max_temp;
 
   const WeatherCard({
-    Key key,
+    Key? key,
     this.title,
     this.temperature,
     this.iconCode,
     this.temperatureFontSize = 28,
     this.iconSize = 2,
-    this.max_temp,
   });
 
   @override
@@ -27,7 +25,7 @@ class WeatherCard extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Text(this.title),
+                Text(this.title!),
                 Image.network(
                   "http://openweathermap.org/img/wn/${this.iconCode}@2x.png",
                   scale: this.iconSize,

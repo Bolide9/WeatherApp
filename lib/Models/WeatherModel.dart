@@ -1,21 +1,21 @@
 class Weather {
-  String country;
-  String city;
-  int temperature;
-  String iconCode;
-  String descripstion;
-  DateTime time;
-  int min_temp;
-  int max_temp;
-  int sea_level;
-  int ground_level;
-  int humidity;
-  int pressure;
-  int feels_like;
-  int visibility;
-  int sunrise;
-  int sunset;
-  double windSpeed;
+  String? country;
+  String? city;
+  int? temperature;
+  String? iconCode;
+  String? descripstion;
+  DateTime? time;
+  int? min_temp;
+  int? max_temp;
+  int? sea_level;
+  int? ground_level;
+  int? humidity;
+  int? pressure;
+  int? feels_like;
+  int? visibility;
+  int? sunrise;
+  int? sunset;
+  double? windSpeed;
 
   Weather({
     this.city,

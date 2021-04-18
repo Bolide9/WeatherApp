@@ -4,9 +4,13 @@ import 'package:weather_app/Models/WeatherModel.dart';
 import 'package:weather_app/Services/WeatherService.dart';
 import 'package:weather_app/States/WeatherState.dart';
 
+import '../Events/WeatherEvent.dart';
+import '../States/WeatherState.dart';
+
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final String cityName;
-  WeatherBloc(this.cityName) : super(null) {
+
+  WeatherBloc(this.cityName) : super(WeatherInitital()) {
     add(WeatherRequested(city: cityName));
   }
 
