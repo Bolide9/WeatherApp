@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/Models/WeatherModel.dart';
 import 'package:weather_app/Widgets/Value_Title.dart';
 
-// ignore: must_be_immutable
 class WeatherWidget extends StatelessWidget {
   final Weather? weather;
 
@@ -30,34 +29,30 @@ class WeatherWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Center(
-                  child: Container(
-                    width: 1,
-                    height: 30,
-                    color: Colors.white,
-                  ),
+                child: Container(
+                  width: 1,
+                  height: 45,
+                  color: Colors.white,
                 ),
               ),
               ValueTile(
                 "Восход",
-                DateFormat('h:m').format(
+                DateFormat('h:mm').format(
                   DateTime.fromMillisecondsSinceEpoch(
                       this.weather!.sunrise! * 1000),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Center(
-                  child: Container(
-                    width: 1,
-                    height: 30,
-                    color: Colors.white,
-                  ),
+                child: Container(
+                  width: 1,
+                  height: 45,
+                  color: Colors.white,
                 ),
               ),
               ValueTile(
                 "Заход",
-                DateFormat('h:m').format(
+                DateFormat('h:mm').format(
                   DateTime.fromMillisecondsSinceEpoch(
                     this.weather!.sunset! * 1000,
                   ),
@@ -65,12 +60,10 @@ class WeatherWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Center(
-                  child: Container(
-                    width: 1,
-                    height: 30,
-                    color: Colors.white,
-                  ),
+                child: Container(
+                  width: 1,
+                  height: 45,
+                  color: Colors.white,
                 ),
               ),
               ValueTile("Влажность", '${weather!.humidity}%'),

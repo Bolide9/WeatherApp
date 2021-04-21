@@ -11,7 +11,7 @@ class WeatherHourly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 115,
+      height: 120,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,

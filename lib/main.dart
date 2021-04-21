@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:weather_app/Bloc/WeatherBloc.dart';
 import 'package:weather_app/States/WeatherState.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -17,14 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WWeather',
+      title: 'Weather Application',
       darkTheme: ThemeData.dark(),
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(
-        title: 'Weather App',
-      ),
+      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -106,10 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         SizedBox(
                           height: 48,
                         ),
-                        CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
+                        CircularProgressIndicator(),
                       ],
                     ),
                   ),
@@ -125,14 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Получаем текущую позицию...'),
+                Text('Получаем текущее местоположение...'),
                 SizedBox(height: 24),
                 SizedBox(
                   height: 48,
                 ),
-                CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
+                CircularProgressIndicator(),
               ],
             ),
           ),

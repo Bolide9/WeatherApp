@@ -49,15 +49,18 @@ class _WeatherPageState extends State<WeatherPage> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.normal,
+                      color: Colors.white,
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
+                        color: Colors.white,
                         width: 1.0,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
+                        color: Colors.blueAccent,
                         width: 2.0,
                       ),
                     ),

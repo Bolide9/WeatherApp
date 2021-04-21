@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:weather_app/Models/WeatherModel.dart';
 import 'package:http/http.dart' as http;
-import 'package:weather_app/States/WeatherState.dart';
 
 class WeatherService {
   static const api_key = "a34849fe2b9e02a1b12acf58cff72eb9";
@@ -14,11 +13,7 @@ class WeatherService {
 
     final response = await http.post(uri);
 
-    if (response.statusCode == 200) {
-      return Weather.fromJson(json.decode(response.body));
-    } else {
-      return WeatherLoadFail();
-    }
+    return Weather.fromJson(json.decode(response.body));
   }
 
   Future<List<Weather>> getHourlyWeather(
