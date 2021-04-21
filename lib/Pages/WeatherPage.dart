@@ -18,9 +18,13 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   TextEditingController _cityController = TextEditingController();
 
+  GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldState,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
@@ -37,38 +41,46 @@ class _WeatherPageState extends State<WeatherPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-                child: TextFormField(
-                  controller: _cityController,
-                  autofocus: false,
-                  keyboardType: TextInputType.streetAddress,
-                  decoration: InputDecoration(
-                    labelText: 'Введите город: ',
-                    labelStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.white,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
+              Form(
+                key: _formKey,
+                child: Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                  child: TextFormField(
+                    controller: _cityController,
+                    validator: (value) =>
+                        value!.isEmpty || value.length < 2 ? null : null,
+                    autofocus: false,
+                    keyboardType: TextInputType.streetAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Введите город: ',
+                      labelStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal,
                         color: Colors.white,
-                        width: 1.0,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 1.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Colors.blueAccent,
+                          width: 2.0,
+                        ),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Colors.blueAccent,
-                        width: 2.0,
-                      ),
-                    ),
+                    onFieldSubmitted: (value) {
+                      if (value.isNotEmpty || value != widget.state) {
+                        return BlocProvider.of<WeatherBloc>(context).add(
+                          WeatherRequested(city: value),
+                        );
+                      }
+                    },
                   ),
-                  onFieldSubmitted: (value) {
-                    BlocProvider.of<WeatherBloc>(context)
-                        .add(WeatherRequested(city: value));
-                  },
                 ),
               ),
               Padding(
